@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+
+program
+  .version(require('../package').version)
+  .usage('<command> [options]')
+  .command('init', 'Create a new project base on maius template');
+
+program.parse(process.argv);

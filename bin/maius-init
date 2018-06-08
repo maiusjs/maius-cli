@@ -1,0 +1,95 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+
+// const Repo = require('github-download-parts');
+const download = require('download-git-repo');
+const program = require('commander');
+const ora = require('ora');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+
+const logger = require('../lib/logger');
+const pkg = require('../package');
+
+/**
+ * Usage.
+ */
+program
+  .on('--help', () => {
+    console.log();
+    console.log('  Examples:');
+    console.log();
+    console.log(chalk.gray('    # create a new project named `app` base on maius template'));
+    console.log('    $ maius init app');
+    console.log();
+  })
+  .version(pkg.version, '-v, --version')
+  .usage('project-name')
+  .parse(process.argv);
+
+/**
+ * start
+ */
+let projectName = program.args[0];
+let targetDir = '';
+let isCurrentDir = false;
+
+if(!projectName) {
+  targetDir = path.resolve('.');
+  isCurrentDir = true;
+} else {
+  targetDir = path.resolve('.', projectName);
+}
+
+if(isCurrentDir || fs.existsSync(targetDir)) {
+
+  inquirer.prompt([{
+    type: 'confirm',
+    message: isCurrentDir ?
+      'Generate app skeleton in current dir?':
+      `Target directory ${projectName} already exist. Are you sure?`,
+    name: 'ok'
+  }]).then(answers => {
+    if (answers.ok) {
+      run();
+    }
+  }).catch((message) => {
+    logger.error(message);
+    process.exit(1);
+  });
+} else {
+  run();
+}
+
+function run() {
+
+  const spinner = ora('Downloading template');
+  spinner.start();
+
+  download('maiusjs/maius-template', targetDir, (err) => {
+    spinner.stop();
+    console.log();
+    if(err) {
+      logger.error(err)
+      logger.error('Something went wrong');
+      return;
+    }
+    logger.error('Generated Success, Have fun');
+  });
+
+  // const repo = new Repo('maiusjs/maius-template');
+  // repo.download(targetDir)
+  //   .then(() => {
+  //     spinner.stop();
+  //     logger.success('Generated Success, Have fun');
+  //   })
+  //   .catch((message) => {
+  //     spinner.stop();
+  //     logger.error('Something went wrong');
+  //   });
+}
+
+process.on('exit', () => {
+  console.log();
+});

@@ -1,0 +1,27 @@
+{
+  "name": "maius-cli",
+  "version": "0.0.1",
+  "description": "A tools for develop maius app",
+  "bin": {
+    "maius": "bin/maius",
+    "maius-init": "bin/maius-init"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.15.1",
+    "download-git-repo": "^1.0.2",
+    "inquirer": "^6.0.0",
+    "ora": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maiusjs/maius-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maiusjs/maius-cli/issues"
+  },
+  "homepage": "https://github.com/maiusjs/maius-cli#readme"
+}
