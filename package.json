@@ -1,6 +1,6 @@
 {
   "name": "maius-cli",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A tools for develop maius app",
   "bin": {
     "maius": "bin/maius"
@@ -10,7 +10,8 @@
     "commander": "^2.15.1",
     "download-git-repo": "^1.0.2",
     "inquirer": "^6.0.0",
-    "ora": "^2.1.0"
+    "ora": "^2.1.0",
+    "update-notifier": "^2.5.0"
   },
   "repository": {
     "type": "git",
