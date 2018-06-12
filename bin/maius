@@ -3,6 +3,11 @@
 const program = require('commander');
 
 program
+  .on('--help', () => {
+    console.log();
+  })
+
+program
   .version(require('../package').version)
   .usage('<command> [options]')
   .command('init', 'Create a new project base on maius template');

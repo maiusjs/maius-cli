@@ -1,10 +1,9 @@
 {
   "name": "maius-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A tools for develop maius app",
   "bin": {
-    "maius": "bin/maius",
-    "maius-init": "bin/maius-init"
+    "maius": "bin/maius"
   },
   "dependencies": {
     "chalk": "^2.4.1",

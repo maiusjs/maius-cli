@@ -75,7 +75,7 @@ function run() {
       logger.error('Something went wrong');
       return;
     }
-    logger.error('Generated Success, Have fun');
+    logger.success('Generated Success, Have fun');
   });
 
   // const repo = new Repo('maiusjs/maius-template');
