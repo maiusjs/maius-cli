@@ -13,6 +13,28 @@ const util = require('../lib/index');
 const logger = require('../lib/logger');
 const pkg = require('../package');
 
+
+const templateList = {
+  'maius-js-template': 'maiusjs/maius-template',
+  'maius-ts-template': 'maiusjs/maius-ts-template',
+}
+
+const InquiryTemplateList = () =>  inquirer
+.prompt([
+  {
+    type: 'list',
+    name: 'templates',
+    message: 'Please select the template to use',
+    choices: [
+      'maius-js-template',
+      'maius-ts-template',
+    ]
+  }
+])
+.then(answers => {
+  run(answers.templates);
+});
+
 /**
  * Usage.
  */
@@ -54,22 +76,24 @@ if(isCurrentDir || fs.existsSync(targetDir)) {
     name: 'ok'
   }]).then(answers => {
     if (answers.ok) {
-      run();
+      InquiryTemplateList();
     }
   }).catch((message) => {
     logger.error(message);
     process.exit(1);
   });
 } else {
-  run();
+  InquiryTemplateList();
 }
 
-function run() {
 
+
+function run(template) {
+  const templateName = template || 'maius-js-template';
   const spinner = ora('Downloading template');
   spinner.start();
 
-  download('maiusjs/maius-template', targetDir, (err) => {
+  download(templateList[templateName], targetDir, (err) => {
     spinner.stop();
     console.log();
     if(err) {
