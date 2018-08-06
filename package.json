@@ -18,6 +18,9 @@
     "type": "git",
     "url": "git+https://github.com/maiusjs/maius-cli.git"
   },
+  "scripts": {
+    "postversion": "npm publish && git push --follow-tags"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
