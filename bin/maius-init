@@ -2,8 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// const Repo = require('github-download-parts');
-const download = require('download-git-repo');
+const Repo = require('github-download-parts');
+// const download = require('download-git-repo');
 const program = require('commander');
 const ora = require('ora');
 const chalk = require('chalk');
@@ -93,27 +93,17 @@ function run(template) {
   const spinner = ora('Downloading template');
   spinner.start();
 
-  download(templateList[templateName], targetDir, (err) => {
-    spinner.stop();
-    console.log();
-    if(err) {
+  Repo(templateList[templateName]).download(targetDir)
+    .then(() => {
+      spinner.stop();
+      console.log();
+      logger.success('Generated Success, Have fun');
+    })
+    .catch(e => {
+      spinner.stop();
       logger.error(err)
       logger.error('Something went wrong');
-      return;
-    }
-    logger.success('Generated Success, Have fun');
-  });
-
-  // const repo = new Repo('maiusjs/maius-template');
-  // repo.download(targetDir)
-  //   .then(() => {
-  //     spinner.stop();
-  //     logger.success('Generated Success, Have fun');
-  //   })
-  //   .catch((message) => {
-  //     spinner.stop();
-  //     logger.error('Something went wrong');
-  //   });
+    });
 }
 
 process.on('exit', () => {
